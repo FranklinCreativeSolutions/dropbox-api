@@ -438,7 +438,7 @@ class Client
 
         $cursor = $this->uploadChunk(self::UPLOAD_SESSION_START, $stream, $chunkSize, null);
 
-        while (! $stream->eof()) {
+        while (!$stream->eof()) {
             $cursor = $this->uploadChunk(self::UPLOAD_SESSION_APPEND, $stream, $chunkSize, $cursor);
         }
 
@@ -578,7 +578,7 @@ class Client
 
         $path = trim($path, '/');
 
-        return ($path === '') ? '' : '/'.$path;
+        return ($path === '') ? '' : '/' . $path;
     }
 
     protected function getEndpointUrl(string $subdomain, string $endpoint): string
@@ -612,8 +612,8 @@ class Client
         } catch (ClientException $exception) {
             if (
                 $isRefreshed
-                || ! $this->tokenProvider instanceof RefreshableTokenProvider
-                || ! $this->tokenProvider->refresh($exception)
+                || !$this->tokenProvider instanceof RefreshableTokenProvider
+                || !$this->tokenProvider->refresh($exception)
             ) {
                 throw $this->determineException($exception);
             }
@@ -640,8 +640,8 @@ class Client
         } catch (ClientException $exception) {
             if (
                 $isRefreshed
-                || ! $this->tokenProvider instanceof RefreshableTokenProvider
-                || ! $this->tokenProvider->refresh($exception)
+                || !$this->tokenProvider instanceof RefreshableTokenProvider
+                || !$this->tokenProvider->refresh($exception)
             ) {
                 throw $this->determineException($exception);
             }
@@ -710,6 +710,16 @@ class Client
     }
 
     /**
+     * Set the namespace ID.
+     */
+    public function setTeamMemberId(string $teamMemberId): self
+    {
+        $this->teamMemberId = $teamMemberId;
+
+        return $this;
+    }
+
+    /**
      * Get the HTTP headers.
      *
      * @param  array<string, string>  $headers
@@ -764,7 +774,7 @@ class Client
     protected function getHeadersForCredentials(): array
     {
         return [
-            'Authorization' => 'Basic '.base64_encode("{$this->appKey}:{$this->appSecret}"),
+            'Authorization' => 'Basic ' . base64_encode("{$this->appKey}:{$this->appSecret}"),
         ];
     }
 }
